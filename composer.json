@@ -1,0 +1,23 @@
+{
+  "name": "gmajor/sr25519-bindings",
+  "description": "sr25519 bindings",
+  "keywords": [
+    "sr25519",
+    "hash"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=8.0",
+    "ext-ffi": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7 || ^9.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Crypto\\": "src/Crypto/"
+    }
+  }
+}
