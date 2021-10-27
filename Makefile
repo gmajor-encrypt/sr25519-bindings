@@ -1,5 +1,10 @@
 .PHONY: sniff test coverage
 
+GO_DIR = go
+
+build:
+	cd $(GO_DIR) && go build -buildmode=c-shared -o sr25519.so .
+
 coverage: vendor/autoload.php
 	XDEBUG_MODE=coverage vendor/bin/phpunit --verbose --coverage-text
 
