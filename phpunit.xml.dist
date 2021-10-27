@@ -6,7 +6,7 @@
 >
     <testsuites>
         <testsuite name="SR25519 Test Suite">
-            <directory>./test/crypto/</directory>
+            <directory>./test/Crypto/</directory>
         </testsuite>
     </testsuites>
     <coverage cacheDirectory=".phpunit.cache/code-coverage"
