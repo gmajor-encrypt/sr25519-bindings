@@ -9,7 +9,7 @@ use FFI;
  *  bindings with golang go-schnorrkel  https://github.com/ChainSafe/go-schnorrkel
  *
  */
-class SR25519
+class sr25519
 {
     public static function InitKeyPair ($secretSeed): keyPair
     {
