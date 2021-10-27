@@ -9,7 +9,7 @@ use FFI;
  *
  * Class Utils
  *
- * @package Codec
+ * @package Crypto
  */
 class Utils
 {

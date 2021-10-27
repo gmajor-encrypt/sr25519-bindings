@@ -1,6 +1,6 @@
 <?php
 
-namespace crypto\Test;
+namespace Crypto\Test;
 
 use Crypto\SR25519;
 use PHPUnit\Framework\TestCase;
