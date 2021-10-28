@@ -241,7 +241,6 @@ func VerifySign(publicKey, msg, sig string) *C.char {
 	if strings.HasPrefix(msg, "0x") {
 		msgBytes = hexToBytes(msg)
 	}
-	fmt.Println(fmt.Sprintf("%t", pk.Verify(msgBytes, hexToBytes(sig))))
 	return C.CString(fmt.Sprintf("%t", pk.Verify(msgBytes, hexToBytes(sig))))
 }
 
