@@ -4,7 +4,9 @@ import (
 	"C"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"strings"
+
 	sr25519 "github.com/ChainSafe/go-schnorrkel"
 )
 
@@ -215,32 +217,38 @@ func bytesToHex(b []byte) string {
 
 //export NewKeypairFromSeed
 // params is hexSeed string
-// return Private key string, Public key string
-func NewKeypairFromSeed(hexSeed string) (*C.char, *C.char) {
+// return Public key string
+func NewKeypairFromSeed(hexSeed string) *C.char {
 	pair, err := NewSr25519FromSeed(hexToBytes(hexSeed))
 	if err != nil {
-		return C.CString(""), C.CString("")
+		return C.CString("")
 	}
-	return C.CString(bytesToHex(pair.Private().Encode())), C.CString(bytesToHex(pair.Public().Encode()))
+	pk := C.CString(bytesToHex(pair.Public().Encode()))
+	return pk
 }
 
 //export VerifySign
 // publicKey is public Key hex string
 // msg is need signed message
 // sig is signed data
-// return true Verified
-func VerifySign(publicKey, msg, sig string) bool {
+// return "true" Verified
+func VerifySign(publicKey, msg, sig string) *C.char {
 	pk, err := NewSr25519PublicKey(hexToBytes(publicKey))
 	if err != nil {
-		return false
+		return C.CString("false")
 	}
-	return pk.Verify(hexToBytes(msg), hexToBytes(sig))
+	msgBytes := []byte(msg)
+	if strings.HasPrefix(msg, "0x") {
+		msgBytes = hexToBytes(msg)
+	}
+	fmt.Println(fmt.Sprintf("%t", pk.Verify(msgBytes, hexToBytes(sig))))
+	return C.CString(fmt.Sprintf("%t", pk.Verify(msgBytes, hexToBytes(sig))))
 }
 
 //export Sign
 // hexSeed is private Key hex string
 // msg is need signed message
-func Sign(hexSeed, msg string) *C.char{
+func Sign(hexSeed, msg string) *C.char {
 	pk, err := NewSr25519FromSeed(hexToBytes(hexSeed))
 	if err != nil {
 		return C.CString("")

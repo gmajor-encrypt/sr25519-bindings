@@ -6,7 +6,13 @@ typedef long unsigned int size_t;
 typedef int wchar_t;
 typedef long double max_align_t;
 
+
+
+
+
 typedef struct { const char *p; ptrdiff_t n; } _GoString_;
+
+
 
 
 typedef signed char GoInt8;
@@ -25,6 +31,8 @@ typedef double GoFloat64;
 
 
 
+
+
 typedef char _check_for_64_bit_pointer_matching_GoInt[sizeof(void*)==64/8 ? 1:-1];
 
 
@@ -34,14 +42,14 @@ typedef void *GoMap;
 typedef void *GoChan;
 typedef struct { void *t; void *v; } GoInterface;
 typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
-struct NewKeypairFromSeed_return {
- char* r0;
- char* r1;
-};
+extern char* NewKeypairFromSeed(GoString hexSeed);
 
 
-extern struct NewKeypairFromSeed_return NewKeypairFromSeed(GoString hexSeed);
 
-extern GoUint8 VerifySign(GoString publicKey, GoString msg, GoString sig);
+
+
+extern char* VerifySign(GoString publicKey, GoString msg, GoString sig);
+
+
 
 extern char* Sign(GoString hexSeed, GoString msg);

@@ -11,11 +11,24 @@ use FFI;
  */
 class sr25519
 {
-    public static function InitKeyPair ($secretSeed): keyPair
+    /**
+     * @var $FFIInstant
+     */
+    public $FFIInstant;
+
+    public function __construct ()
+    {
+        $this->FFIInstant = FFI::load("src/Crypto/sr25519_lib.h");
+    }
+
+
+    public function InitKeyPair ($secretSeed): keyPair
     {
 
-        $ffi = FFI::load("src/Crypto/sr25519_lib.h");
+        $ffi = $this->FFIInstant;
         $keyPair = $ffi->NewKeypairFromSeed(Utils::convertGoString($ffi, $secretSeed));
-        return new keyPair(FFI::string($keyPair->r0), FFI::string($keyPair->r1));
+        $pk = FFI::string($keyPair);
+        return new keyPair($pk, $secretSeed);
     }
+
 }

@@ -93,9 +93,21 @@ func TestSr25519FromSeed(t *testing.T) {
 	pkEncode := pk.Encode()
 	var mss []byte
 	mss = append(mss, pkEncode[:]...)
-	exp := "d6a3105d6768e956e9e5d41050ac29843f98561410d3a47f9dd5b3b227ab8746"
-	if !reflect.DeepEqual(bytesToHex(mss), "3c753c1d5859b082aa23cc7c1dc27b529c4a301dec1c06a6f650c0547901c43f") {
+	exp := "3c753c1d5859b082aa23cc7c1dc27b529c4a301dec1c06a6f650c0547901c43f"
+	if !reflect.DeepEqual(bytesToHex(mss), exp) {
 		t.Fatalf("Fail: got %s expected %s", bytesToHex(mss), exp)
 	}
-	fmt.Println(NewKeypairFromSeed("0x0aff680b436f6f5622f4a8030148dc4b712f02bb3b96e3dcc21ebbaeade51811"))
+	// sig
+	msg := []byte("helloworld")
+	sig, err := sk.Sign(msg)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println("0x" + bytesToHex(sig))
+	ok := pk.Verify(msg, sig)
+	if !ok {
+		t.Fatal("Fail: did not verify sr25519 sig")
+	}
+	NewKeypairFromSeed("0x0aff680b436f6f5622f4a8030148dc4b712f02bb3b96e3dcc21ebbaeade51811")
+	VerifySign(exp, "helloworld", "0x8ea7b57c28d9faf757f1606ecaf8e02baa14e9927287d2ed01f6cf8c7f86fb11bc800e10cff77d10bfd1c2d48fb522ebbb0746cbd03626578a406d6688723c88")
 }

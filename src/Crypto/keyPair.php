@@ -2,22 +2,24 @@
 
 namespace Crypto;
 
+use FFI;
+
 class keyPair
 {
     /**
      * keyPair publicKey
      *
-     * @var $publicKey
+     * @var string $publicKey
      */
-    public $publicKey;
+    public string $publicKey;
 
 
     /**
      * keyPair privateKey
      *
-     * @var $privateKey
+     * @var string $privateKey
      */
-    protected $privateKey;
+    protected string $privateKey;
 
     /**
      * keyPair construct
@@ -31,4 +33,22 @@ class keyPair
         $this->publicKey = $pk;
     }
 
+    /**
+     *
+     * Verify signature, return true if signature is correct
+     *
+     * @param $ffi
+     * @param string $msg
+     * @param string $signature
+     * @return bool
+     */
+    public function VerifySign ($ffi, string $msg, string $signature): bool
+    {
+
+        $result = $ffi->VerifySign(
+            Utils::convertGoString($ffi, $this->publicKey),
+            Utils::convertGoString($ffi, $msg),
+            Utils::convertGoString($ffi, $signature));
+        return $ffi::string($result) == "true";
+    }
 }
