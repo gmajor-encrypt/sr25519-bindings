@@ -252,7 +252,11 @@ func Sign(hexSeed, msg string) *C.char {
 	if err != nil {
 		return C.CString("")
 	}
-	sig, err := pk.Sign(hexToBytes(msg))
+    msgBytes := []byte(msg)
+    if strings.HasPrefix(msg, "0x") {
+        msgBytes = hexToBytes(msg)
+    }
+	sig, err := pk.Sign(msgBytes)
 	if err != nil {
 		return C.CString("")
 	}

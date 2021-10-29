@@ -19,7 +19,7 @@ class keyPair
      *
      * @var string $privateKey
      */
-    protected string $privateKey;
+    private string $privateKey;
 
     /**
      * keyPair construct
@@ -34,21 +34,17 @@ class keyPair
     }
 
     /**
-     *
-     * Verify signature, return true if signature is correct
-     *
-     * @param $ffi
+     * @param void $ffi FFI instant
      * @param string $msg
-     * @param string $signature
-     * @return bool
+     * @return string
      */
-    public function VerifySign ($ffi, string $msg, string $signature): bool
+    public function sign ($ffi, string $msg): string
     {
-
-        $result = $ffi->VerifySign(
-            Utils::convertGoString($ffi, $this->publicKey),
-            Utils::convertGoString($ffi, $msg),
-            Utils::convertGoString($ffi, $signature));
-        return $ffi::string($result) == "true";
+        $result = $ffi->Sign(
+            Utils::convertGoString($ffi, $this->privateKey),
+            Utils::convertGoString($ffi, $msg));
+        return "0x" . $ffi::string($result);
     }
 }
+
+
