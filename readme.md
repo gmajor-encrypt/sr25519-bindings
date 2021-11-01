@@ -10,6 +10,19 @@ Reference to https://github.com/ChainSafe/go-schnorrkel
 composer require gmajor/sr25519-bindings
 ```
 
+## Building
+
+### Requirement
+
+1. PHP 7 >= 7.4.0, PHP 8 FFI support 
+2. GOLANG (>1.15)
+
+### Build
+
+```bash
+cd go && go build -buildmode=c-shared -o sr25519.so . && mv sr25519.so ../src/Crypto/sr25519.so
+```
+
 
 ## Basic Usage
 
