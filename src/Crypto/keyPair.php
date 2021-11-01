@@ -24,8 +24,8 @@ class keyPair
     /**
      * keyPair construct
      *
-     * @param string $pk public key
-     * @param string $sk private key
+     * @param string $pk Public key
+     * @param string $sk Secret seed
      */
     public function __construct (string $pk, string $sk)
     {

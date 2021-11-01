@@ -7,6 +7,9 @@ use InvalidArgumentException;
 
 /**
  *  SR25519 Crypto lib
+ *  is based on the same underlying curve as Ed25519. However, it uses Schnorr signatures instead of the EdDSA scheme.
+ *
+ *
  *  Due to the feature of ffi, currently only one instance of ffi can be init at the same time in the instance
  *
  *  bindings with golang go-schnorrkel  https://github.com/ChainSafe/go-schnorrkel
@@ -28,6 +31,8 @@ class sr25519
      * init sr25519 keyPair
      *
      * @param $secretSeed
+     * (aka "Private Key" or "Raw Seed") - The minimum necessary information to restore the key pair.
+     *  All other information is calculated from the seed.
      * @return keyPair
      */
     public function InitKeyPair ($secretSeed): keyPair

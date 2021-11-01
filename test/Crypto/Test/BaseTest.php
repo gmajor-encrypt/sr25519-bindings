@@ -28,7 +28,10 @@ final class BaseTest extends TestCase
     public function testSr25519Verify (sr25519 $sr)
     {
         $pair = $sr->InitKeyPair("0x0aff680b436f6f5622f4a8030148dc4b712f02bb3b96e3dcc21ebbaeade51811");
+        // Passed Verify
         $this->assertEquals(true, $sr->VerifySign($pair, "helloworld", "0x8ea7b57c28d9faf757f1606ecaf8e02baa14e9927287d2ed01f6cf8c7f86fb11bc800e10cff77d10bfd1c2d48fb522ebbb0746cbd03626578a406d6688723c88"));
+        // Verify failed
+        $this->assertEquals(false, $sr->VerifySign($pair, "hel", "0x4053b868e50e1685fd011df37fbeab603de0181beddeaa210d889244d11c5f3030d9fd7ce24d80207272e09be89fe6361a0bef1cce1e830f391e68cb4a879182"));
     }
 
 
@@ -42,6 +45,8 @@ final class BaseTest extends TestCase
         $this->assertEquals(true, $sr->VerifySign($pair, "helloworld", $sr->Sign($pair, "helloworld")));
         // sign hex msg
         $this->assertEquals(true, $sr->VerifySign($pair, "0xaeade51811", $sr->Sign($pair, "0xaeade51811")));
+        // sign empty msg
+        $this->assertEquals(true, $sr->VerifySign($pair, "", $sr->Sign($pair, "")));
     }
 
     /**
