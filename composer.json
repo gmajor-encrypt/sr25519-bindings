@@ -19,5 +19,10 @@
     "psr-4": {
       "Crypto\\": "src/Crypto/"
     }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "cd go && go build -buildmode=c-shared -o ../src/Crypto/sr25519.so . "
+    ]
   }
 }
