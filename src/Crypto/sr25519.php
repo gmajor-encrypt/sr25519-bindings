@@ -24,7 +24,10 @@ class sr25519
 
     public function __construct ()
     {
-        $this->FFIInstant = FFI::load("src/Crypto/sr25519_lib.h");
+        $this->FFIInstant = FFI::cdef(
+            file_get_contents(__DIR__ . "/sr25519_lib.h"),
+            __DIR__ . '/sr25519.so'
+        );
     }
 
     /**
@@ -82,4 +85,22 @@ class sr25519
     {
         return $pair->sign($this->FFIInstant, $msg);
     }
+
+    /**
+     *
+     * XXHash64CheckSum
+     *
+     * @param int $seed
+     * @param string $data
+     * @return string
+     */
+    public function XXHash64CheckSum (int $seed, string $data): string
+    {
+        $result = $this->FFIInstant->XXHash64CheckSum(
+            $seed,
+            Utils::convertGoString($this->FFIInstant, $data));
+        return $this->FFIInstant::string($result);
+    }
+
 }
+

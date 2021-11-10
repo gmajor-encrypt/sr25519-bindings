@@ -1,14 +1,7 @@
-#define FFI_LIB "src/Crypto/sr25519.so"
-
-
 typedef long int ptrdiff_t;
 typedef long unsigned int size_t;
 typedef int wchar_t;
 typedef long double max_align_t;
-
-
-
-
 
 typedef struct { const char *p; ptrdiff_t n; } _GoString_;
 
@@ -53,3 +46,6 @@ extern char* VerifySign(GoString publicKey, GoString msg, GoString sig);
 
 
 extern char* Sign(GoString hexSeed, GoString msg);
+
+
+extern char* XXHash64CheckSum(GoInt send, GoString data);

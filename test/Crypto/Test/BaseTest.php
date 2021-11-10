@@ -49,6 +49,16 @@ final class BaseTest extends TestCase
         $this->assertEquals(true, $sr->VerifySign($pair, "", $sr->Sign($pair, "")));
     }
 
+
+    /**
+     * @depends  testProvider
+     */
+    public function testXXHash64 (sr25519 $sr)
+    {
+        $this->assertEquals("398167db5dcadc4f",$sr->XXHash64CheckSum(0,"test"));
+        $this->assertEquals("8d3e46a2f8c36954",$sr->XXHash64CheckSum(0,"0xffff"));
+    }
+
     /**
      * provider sr25519
      *

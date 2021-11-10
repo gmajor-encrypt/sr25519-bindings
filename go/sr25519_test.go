@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSr25519SignAndVerify(t *testing.T) {
@@ -110,4 +112,10 @@ func TestSr25519FromSeed(t *testing.T) {
 	}
 	NewKeypairFromSeed("0x0aff680b436f6f5622f4a8030148dc4b712f02bb3b96e3dcc21ebbaeade51811")
 	VerifySign(exp, "helloworld", "0x8ea7b57c28d9faf757f1606ecaf8e02baa14e9927287d2ed01f6cf8c7f86fb11bc800e10cff77d10bfd1c2d48fb522ebbb0746cbd03626578a406d6688723c88")
+}
+
+
+func Test_XXHash64CheckSum(t *testing.T) {
+	assert.Equal(t,"398167db5dcadc4f",formatCgoString(XXHash64CheckSum(0,"test")))
+	assert.Equal(t,"8d3e46a2f8c36954",formatCgoString(XXHash64CheckSum(0,"0xffff")))
 }

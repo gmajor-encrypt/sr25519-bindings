@@ -14,7 +14,7 @@ composer require gmajor/sr25519-bindings
 
 ### Requirement
 
-1. PHP 7 >= 7.4.0, PHP 8 FFI support 
+1. PHP 7 >= 7.4.0, PHP 8 FFI support
 2. GOLANG (>1.15)
 
 ### Build
@@ -22,7 +22,6 @@ composer require gmajor/sr25519-bindings
 ```bash
 cd go && go build -buildmode=c-shared -o sr25519.so . && mv sr25519.so ../src/Crypto/sr25519.so
 ```
-
 
 ## Basic Usage
 
@@ -35,7 +34,6 @@ Codec supports `PSR-4` autoloaders.
 # When installed via composer
 require_once 'vendor/autoload.php';
 ```
-
 
 ### KeyPair
 
@@ -60,7 +58,6 @@ $sr = new sr25519();
 $sr->Sign($sr->InitKeyPair("secretSeed"), "msg");
 ```
 
-
 ### verify signature
 
 Verify a signature proof
@@ -72,6 +69,16 @@ $sr = new sr25519();
 $sr->VerifySign($sr->InitKeyPair("secretSeed"), "helloworld", "signature");
 ```
 
+### XXHash 64 support
+ 
+implementation of https://github.com/pierrec/xxHash/xxHash64 
+
+```php
+<?php
+use Crypto\sr25519;
+$sr = new sr25519();
+$sr->XXHash64CheckSum(0, "helloworld");
+```
 
 ## Test
 
@@ -79,11 +86,9 @@ $sr->VerifySign($sr->InitKeyPair("secretSeed"), "helloworld", "signature");
 make test
 ```
 
-
 ## Resources
 
 - [go-schnorrkel](https://github.com/ChainSafe/go-schnorrkel)
-
 
 ## License
 

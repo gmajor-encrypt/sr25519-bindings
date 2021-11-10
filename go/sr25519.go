@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	sr25519 "github.com/ChainSafe/go-schnorrkel"
+	"github.com/pierrec/xxHash/xxHash64"
 )
 
 const SecretKeySize = 64
@@ -252,15 +253,32 @@ func Sign(hexSeed, msg string) *C.char {
 	if err != nil {
 		return C.CString("")
 	}
-    msgBytes := []byte(msg)
-    if strings.HasPrefix(msg, "0x") {
-        msgBytes = hexToBytes(msg)
-    }
+	msgBytes := []byte(msg)
+	if strings.HasPrefix(msg, "0x") {
+		msgBytes = hexToBytes(msg)
+	}
 	sig, err := pk.Sign(msgBytes)
 	if err != nil {
 		return C.CString("")
 	}
 	return C.CString(bytesToHex(sig))
+}
+
+//export XXHash64CheckSum
+// XXHash64 CheckSum
+func XXHash64CheckSum(send int, data string) *C.char {
+	digest := xxHash64.New(uint64(send))
+	msgBytes := []byte(data)
+	if strings.HasPrefix(data, "0x") {
+		msgBytes = hexToBytes(data)
+	}
+	_, _ = digest.Write(msgBytes)
+	return C.CString(bytesToHex(digest.Sum(nil)))
+}
+
+// help function, avoid `use of cgo in test not supported`
+func formatCgoString(c *C.char) string {
+	return C.GoString(c)
 }
 
 func main() {}
