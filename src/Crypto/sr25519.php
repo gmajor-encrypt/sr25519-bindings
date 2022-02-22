@@ -57,9 +57,9 @@ class sr25519
      *
      * Verify signature, return true if signature is correct
      *
-     * @param keyPair $pair
-     * @param string $msg
-     * @param string $signature
+     * @param keyPair $pair keyPair instance
+     * @param string $msg   msg to be signed
+     * @param string $signature signature
      * @return bool
      */
     public function VerifySign (keyPair $pair, string $msg, string $signature): bool
@@ -77,8 +77,8 @@ class sr25519
      *
      * Sign uses the private key to sign the message using the sr25519 signature algorithm
      *
-     * @param keyPair $pair
-     * @param string $msg
+     * @param keyPair $pair keyPair instance
+     * @param string $msg msg to be signed
      * @return string
      */
     public function Sign (keyPair $pair, string $msg): string
@@ -89,8 +89,10 @@ class sr25519
     /**
      *
      * XXHash64CheckSum
+     * https://github.com/Cyan4973/xxHash
+     * The algorithm takes an input a message of arbitrary length and a seed value
      *
-     * @param int $seed
+     * @param int $seed seed value
      * @param string $data
      * @return string
      */

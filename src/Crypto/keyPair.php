@@ -34,6 +34,9 @@ class keyPair
     }
 
     /**
+     *
+     * ffi sr25519 sign message
+     *
      * @param void $ffi FFI instant
      * @param string $msg
      * @return string
