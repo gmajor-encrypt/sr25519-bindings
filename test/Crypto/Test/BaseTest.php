@@ -10,9 +10,12 @@ final class BaseTest extends TestCase
 {
 
     /**
-     * @depends  testProvider
+     *
+     * test
+     *
+     * @depends  testSr25519FFIProvider
      */
-    public function testSr25519Init (sr25519 $sr)
+    public function testSr2551KeyPair9Init (sr25519 $sr)
     {
         $pair = $sr->InitKeyPair("0x0aff680b436f6f5622f4a8030148dc4b712f02bb3b96e3dcc21ebbaeade51811");
         // public key
@@ -23,9 +26,9 @@ final class BaseTest extends TestCase
     }
 
     /**
-     * @depends  testProvider
+     * @depends  testSr25519FFIProvider
      */
-    public function testSr25519Verify (sr25519 $sr)
+    public function testSr25519SignatureVerify (sr25519 $sr)
     {
         $pair = $sr->InitKeyPair("0x0aff680b436f6f5622f4a8030148dc4b712f02bb3b96e3dcc21ebbaeade51811");
         // Passed Verify
@@ -36,7 +39,7 @@ final class BaseTest extends TestCase
 
 
     /**
-     * @depends  testProvider
+     * @depends  testSr25519FFIProvider
      */
     public function testSr25519Sign (sr25519 $sr)
     {
@@ -51,20 +54,25 @@ final class BaseTest extends TestCase
 
 
     /**
-     * @depends  testProvider
+     * test XXHash64 hash
+     *
+     * @depends  testSr25519FFIProvider
      */
     public function testXXHash64 (sr25519 $sr)
     {
         $this->assertEquals("398167db5dcadc4f",$sr->XXHash64CheckSum(0,"test"));
         $this->assertEquals("8d3e46a2f8c36954",$sr->XXHash64CheckSum(0,"0xffff"));
+        $this->assertEquals("69f126323530963c",$sr->XXHash64CheckSum(1,"0xffffffff"));
+        $this->assertEquals("f1750113e3b35e95",$sr->XXHash64CheckSum(16,"0xffffffff"));
+        $this->assertEquals("444bd0c234de5108",$sr->XXHash64CheckSum(32,"0xfffffffffffff"));
     }
 
     /**
-     * provider sr25519
+     * provider sr25519 ffi
      *
      * @return sr25519
      */
-    public function testProvider (): sr25519
+    public function testSr25519FFIProvider (): sr25519
     {
         $sr = new sr25519();
         $this->assertNotNull($sr->FFIInstant);
