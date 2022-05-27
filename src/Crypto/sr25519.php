@@ -62,11 +62,11 @@ class sr25519
      * @param string $signature signature
      * @return bool
      */
-    public function VerifySign (keyPair $pair, string $msg, string $signature): bool
+    public function VerifySign (keyPair|string $pairOrPk, string $msg, string $signature): bool
     {
-
+        $pk = $pairOrPk instanceof keyPair ? $pairOrPk->publicKey : $pairOrPk;
         $result = $this->FFIInstant->VerifySign(
-            Utils::convertGoString($this->FFIInstant, $pair->publicKey),
+            Utils::convertGoString($this->FFIInstant, $pk),
             Utils::convertGoString($this->FFIInstant, $msg),
             Utils::convertGoString($this->FFIInstant, $signature));
         return $this->FFIInstant::string($result) == "true";
