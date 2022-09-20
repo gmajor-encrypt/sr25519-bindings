@@ -66,7 +66,7 @@ func NewSr25519PublicKey(in []byte) (*Sr25519PublicKey, error) {
 	copy(buf[:], in)
 	pk, err := sr25519.NewPublicKey(buf)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	return &Sr25519PublicKey{key: pk}, nil
 }
@@ -153,7 +153,7 @@ func (k *Sr25519PublicKey) Verify(msg, sig []byte) bool {
 	t := sr25519.NewSigningContext(SigningContext, msg)
 	result, err := k.key.Verify(s, t)
 	if err != nil {
-		panic(err)
+		return false
 	}
 	return result
 }
