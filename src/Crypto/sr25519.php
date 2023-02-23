@@ -24,9 +24,10 @@ class sr25519
 
     public function __construct ()
     {
+        $path = PHP_OS == "Darwin" ? '/sr25519.dylib' : '/sr25519.so';
         $this->FFIInstant = FFI::cdef(
             file_get_contents(__DIR__ . "/sr25519_lib.h"),
-            __DIR__ . '/sr25519.so'
+            __DIR__ . $path
         );
     }
 
@@ -58,7 +59,7 @@ class sr25519
      * Verify signature, return true if signature is correct
      *
      * @param keyPair $pair keyPair instance
-     * @param string $msg   msg to be signed
+     * @param string $msg msg to be signed
      * @param string $signature signature
      * @return bool
      */
